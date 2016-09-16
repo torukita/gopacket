@@ -72,6 +72,8 @@ func (a UDPPort) LayerType() gopacket.LayerType {
 		return LayerTypeDHCPv4
 	case 6343:
 		return LayerTypeSFlow
+	case 2123:
+		return LayerTypeGTPv1
 	case 2152:
 		return LayerTypeGTPv1
 	default:

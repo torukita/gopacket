@@ -30,7 +30,7 @@ type GTPv1 struct {
 	SequenceNumber                 uint16  // 16bit
 	NPDUNumber                     uint8   // 8bit
     NextExtentionHeaderType        uint8   // 8bit
-	restOfData                     []byte
+	//restOfData                     []byte
 }
 
 /* Layer Interface */
@@ -64,7 +64,7 @@ func (g *GTPv1) NextLayerType() gopacket.LayerType {
 }
 
 func (g *GTPv1) LayerPayload() []byte {
-    return g.restOfData
+    return g.Payload
 }
 
 func (g *GTPv1) DecodeFromBytes(data []byte, df gopacket.DecodeFeedback) error {
@@ -88,9 +88,11 @@ func (g *GTPv1) DecodeFromBytes(data []byte, df gopacket.DecodeFeedback) error {
 		g.SequenceNumber = binary.BigEndian.Uint16(data[8:10])
 		g.NPDUNumber = uint8(data[10])
 		g.NextExtentionHeaderType = uint8(data[11])
-		g.restOfData = data[12:]
+		g.Payload = data[12:]
+		//g.restOfData = data[12:]
 	} else {
-		g.restOfData = data[8:]
+		g.Payload = data[8:]
+		//g.restOfData = data[8:]
 	}
 	// fmt.Printf("DATA=%v\n", g.restOfData)
 	return nil
